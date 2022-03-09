@@ -41,7 +41,7 @@ fn main() -> Result<()> {
                         use std::collections::hash_map::Entry;
                         match connections.entry(Quad {
                             src: (src, tcph.source_port()),
-                            dst: (src, tcph.destination_port())
+                            dst: (dest, tcph.destination_port())
                         }) {
                             Entry::Occupied(mut c) => {
                                 c.get_mut().on_packet(&mut nic, iph, tcph, &buf[datai..nbytes])?;
@@ -64,7 +64,6 @@ fn main() -> Result<()> {
             }
 
             Err(e) => {
-                eprintln!("Rejected a weird packet {:?}", e);
             }
         };
     };
